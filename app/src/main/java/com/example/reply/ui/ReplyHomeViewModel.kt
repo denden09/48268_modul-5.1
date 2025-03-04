@@ -47,11 +47,10 @@ class ReplyHomeViewModel(
                     _uiState.value = ReplyHomeUIState(error = ex.message)
                 }
                 .collect { emails ->
-                    // If nothing is selected, initially select the first element.
-                    val currentSelected = _uiState.value.selectedEmail
+                    val currentSelection = _uiState.value.selectedEmail
                     _uiState.value = ReplyHomeUIState(
                         emails = emails,
-                        selectedEmail = currentSelected ?: emails.firstOrNull()
+                        selectedEmail = currentSelection ?: emails.first()
                     )
                 }
         }
