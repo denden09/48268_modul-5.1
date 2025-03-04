@@ -66,30 +66,37 @@ private fun ReplyNavigationWrapperUI(
     val windowSize = with(LocalDensity.current) {
         currentWindowSize().toSize().toDpSize()
     }
-    val navLayoutType = if (windowSize.width >= WINDOW_WIDTH_LARGE) {
-        // Show a permanent drawer when window width is large.
+    val layoutType = if (windowSize.width >= 1200.dp) {
         NavigationSuiteType.NavigationDrawer
     } else {
-        // Otherwise use the default from NavigationSuiteScaffold.
-        NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(currentWindowAdaptiveInfo())
+        NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(
+            currentWindowAdaptiveInfo()
+        )
     }
 
     NavigationSuiteScaffold(
         navigationSuiteItems = {
             ReplyDestination.entries.forEach {
                 item(
-                    label = { Text(stringResource(it.labelRes)) },
-                    icon = { Icon(it.icon, stringResource(it.labelRes)) },
                     selected = it == selectedDestination,
                     onClick = { /*TODO update selection*/ },
+                    icon = {
+                        Icon(
+                            imageVector = it.icon,
+                            contentDescription = stringResource(it.labelRes)
+                        )
+                    },
+                    label = {
+                        Text(text = stringResource(it.labelRes))
+                    },
                 )
             }
-        },
-        layoutType = navLayoutType
+        }
     ) {
         content()
     }
 }
+
 
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
